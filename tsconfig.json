@@ -7,6 +7,7 @@
     "skipLibCheck": true,
 
     "paths": {
+      "@/*": ["./src/*"],
       "@views/*": ["./src/views/*"],
       "@store/*": ["./src/store/*"],
       "@routes/*": ["./src/routes/*"],
