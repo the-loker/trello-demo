@@ -1,3 +1,3 @@
-import type { TCardProps } from './card';
+import type { TCardProps } from './board-card';
 
 export const useCard = (props: TCardProps) => {};

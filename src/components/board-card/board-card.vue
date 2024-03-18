@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { toRefs, defineProps } from 'vue';
-  import { cardProps } from './card';
-  import { useCard } from './use-card';
+  import { cardProps } from './board-card';
+  import { useCard } from './use-board-card';
 
   const props = defineProps(cardProps);
 
@@ -24,5 +24,5 @@
 <style lang="scss">
   .board-card {
   }
-
 </style>
+./board-card ./use-board-card

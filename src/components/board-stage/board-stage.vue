@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { toRefs, defineProps } from 'vue';
-  import { stageProps } from './stage';
-  import { useStage } from './use-stage';
+  import { stageProps } from './board-stage';
+  import { useStage } from './use-board-stage';
 
   const props = defineProps(stageProps);
 
@@ -30,5 +30,5 @@
     &__cards {
     }
   }
-
 </style>
+./use-board-stage./board-stage
