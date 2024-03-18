@@ -14,8 +14,8 @@ export const cardFormProps = {
 export type TCardFormProps = ExtractPropTypes<typeof cardFormProps>;
 
 export const cardFormEmits = {
-  'update:modelValue': (value: boolean) => value,
-  'close-form': (value: boolean) => value,
+  'update:modelValue': (value: boolean) => typeof value === 'boolean',
+  'close-form': (value: boolean) => typeof value === 'boolean',
 };
 
 export type TCardFormEmits = typeof cardFormEmits;
