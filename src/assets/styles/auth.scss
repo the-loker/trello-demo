@@ -1,0 +1,15 @@
+.signup-content,
+.signin-content {
+  width: 300px;
+  margin: 0px auto;
+}
+
+.signin-form,
+.signup-form {
+  display: flex;
+  flex-direction: column;
+
+  &__item {
+    margin-bottom: 15px;
+  }
+}

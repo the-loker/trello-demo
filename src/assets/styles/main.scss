@@ -1,0 +1,28 @@
+html,
+body {
+  box-sizing: border-box;
+  margin: 0;
+
+  background-color: $background-default;
+
+  font-family: $font-family-default;
+  font-size: $font-size-default;
+  font-weight: $font-weight-default;
+
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1.page-title {
+  margin: 0 0 15px;
+
+  text-align: center;
+
+  color: #ffffff;
+}

@@ -1,22 +1,4 @@
 @import "./vars";
-
-html,
-body {
-  box-sizing: border-box;
-  margin: 0;
-
-  background-color: $background-default;
-
-  font-family: $font-family-default;
-  font-size: $font-size-default;
-  font-weight: $font-weight-default;
-
-  -webkit-font-smoothing: subpixel-antialiased;
-  -webkit-tap-highlight-color: transparent;
-  text-rendering: optimizeLegibility;
-  -webkit-text-size-adjust: 100%;
-}
-
-.container {
-  margin: 0px auto;
-}
+@import "./main.scss";
+@import "./ui/index.scss";
+@import "./auth.scss";

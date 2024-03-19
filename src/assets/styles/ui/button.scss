@@ -1,0 +1,23 @@
+.button {
+  padding: 10px 20px;
+
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  color: #ffffff;
+  border: none;
+  border-radius: $border-radius-default;
+  background-color: #000000;
+
+  &:hover {
+    background-color: #4d4d4d;
+  }
+
+  &--primary {
+    background-color: #1e68a3;
+
+    &:hover {
+      background-color: #3b81ba;
+    }
+  }
+}
