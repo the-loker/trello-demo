@@ -1,17 +1,39 @@
 <script lang="ts" setup>
+  import { onBeforeUnmount } from 'vue';
   import { useSigninForm } from './use-signin-form';
 
-  const { formData } = useSigninForm();
+  const { formData, isLoading, errors, onSignIn, hasErrors, clearErrors } =
+    useSigninForm();
+
+  onBeforeUnmount(() => clearErrors());
 </script>
 
 <template>
-  <form class="signin-form" @submit.prevent="">
+  <div v-if="hasErrors" class="auth-errors">
+    <div v-for="(error, idx) in errors" :key="idx" class="auth-errors__message">
+      <span>{{ error }}</span>
+    </div>
+  </div>
+
+  <form class="signin-form" @submit.prevent="onSignIn">
     <div class="signin-form__item">
-      <input class="input" v-model="formData.username" placeholder="Name" />
+      <input
+        class="input"
+        v-model="formData.username"
+        placeholder="Name"
+        :disabled="isLoading"
+      />
     </div>
     <div class="signin-form__item">
-      <input class="input" v-model="formData.password" placeholder="Password" />
+      <input
+        class="input"
+        v-model="formData.password"
+        placeholder="Password"
+        :disabled="isLoading"
+      />
     </div>
-    <button class="button button--primary">Sign in</button>
+    <button class="button button--primary" type="submit" :disabled="isLoading">
+      Sign in
+    </button>
   </form>
 </template>

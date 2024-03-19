@@ -13,6 +13,14 @@
     background-color: #4d4d4d;
   }
 
+  &:disabled,
+  &:hover:disabled {
+    cursor: no-drop;
+
+    color: #8e8e8e;
+    background-color: #565656;
+  }
+
   &--primary {
     background-color: #1e68a3;
 
