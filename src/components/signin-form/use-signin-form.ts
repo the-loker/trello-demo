@@ -1,8 +1,10 @@
 import { object, string } from 'yup';
 import { ref, computed, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@store/auth';
 
 export const useSigninForm = () => {
+  const router = useRouter();
   const { signin } = useAuthStore();
 
   const formDataSchema = object({
@@ -43,6 +45,8 @@ export const useSigninForm = () => {
         username: formData.username,
         password: formData.password,
       });
+
+      return await router.push({ name: 'private-board' });
     } catch (e: unknown) {
       if (e instanceof Error) {
         return errors.value.push(e.message);

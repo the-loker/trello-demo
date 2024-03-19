@@ -24,7 +24,7 @@ function getTokenPayload(token: string): ITokenPayload {
 
     const splitToken = token.split('.');
 
-    if (!Array.isArray(splitToken) || !(splitToken.length < 3)) {
+    if (!Array.isArray(splitToken) || splitToken.length < 3) {
       throw new Error('Access Token is not JWT');
     }
 
@@ -39,7 +39,7 @@ function getTokenPayload(token: string): ITokenPayload {
 function isTokenExpired(expireIn: number): boolean {
   const subtract = 10 * 1000;
 
-  return Date.now() <= expireIn - subtract;
+  return Date.now() >= expireIn - subtract;
 }
 
 function isTokenData(data: any): data is ITokenData {
@@ -219,7 +219,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
       try {
         const res = await api
-          .post('/users/token/refresh/', {
+          .post('users/token/refresh/', {
             json: { refresh: refreshToken },
           })
           .json<{ access: string }>();

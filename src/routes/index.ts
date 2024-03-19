@@ -18,7 +18,7 @@ router.beforeEach(async (to, from, next) => {
     useAuthStore();
   const { hasUser } = useUserStore();
 
-  if (hasRefreshToken() && !hasUser) {
+  if (hasRefreshToken() && !hasUser()) {
     try {
       const tokenData = getRefreshToken();
 
@@ -27,6 +27,8 @@ router.beforeEach(async (to, from, next) => {
       return next();
     } catch (e) {
       resetAuthData();
+
+      debugger;
 
       return next({ name: 'public-signin' });
     }
