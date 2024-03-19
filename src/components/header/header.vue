@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { useHeader } from './use-header';
 
-  const { isAuth } = useHeader();
+  const { isAuth, onLogout } = useHeader();
 </script>
 
 <template>
@@ -33,8 +33,12 @@
             >
           </li>
           <li class="header-auth-nav__item">
-            <router-link class="header-auth-nav__link" to=""
-              >Logout</router-link
+            <a
+              href="#"
+              class="header-auth-nav__link"
+              to=""
+              @click.prevent="onLogout"
+              >Logout</a
             >
           </li>
         </template>

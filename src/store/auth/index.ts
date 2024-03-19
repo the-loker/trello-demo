@@ -213,14 +213,16 @@ export const useAuthStore = defineStore('authStore', () => {
     }
   }
 
-  async function refresh(refreshToken: string) {
+  async function refresh() {
     try {
       let access;
+
+      const tokenData = getRefreshToken();
 
       try {
         const res = await api
           .post('users/token/refresh/', {
-            json: { refresh: refreshToken },
+            json: { refresh: tokenData.token },
           })
           .json<{ access: string }>();
 
@@ -252,6 +254,10 @@ export const useAuthStore = defineStore('authStore', () => {
     }
   }
 
+  function logout() {
+    resetAuthData();
+  }
+
   return {
     isAuth,
     resetAuthData,
@@ -260,5 +266,6 @@ export const useAuthStore = defineStore('authStore', () => {
     signin,
     signup,
     refresh,
+    logout,
   };
 });

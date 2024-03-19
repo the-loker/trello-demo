@@ -34,6 +34,7 @@
     </div>
     <div class="signup-form__item">
       <input
+        type="password"
         class="input"
         v-model="formData.password"
         placeholder="Password"

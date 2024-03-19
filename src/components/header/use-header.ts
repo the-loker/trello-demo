@@ -1,7 +1,15 @@
 import { useAuthStore } from '@store/auth';
+import { useRouter } from 'vue-router';
 
 export const useHeader = () => {
-  const { isAuth } = useAuthStore();
+  const router = useRouter();
+  const { isAuth, logout } = useAuthStore();
 
-  return { isAuth };
+  async function onLogout() {
+    logout();
+
+    await router.push({ name: 'public-home' });
+  }
+
+  return { isAuth, onLogout };
 };

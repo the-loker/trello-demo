@@ -14,21 +14,16 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const { resetAuthData, getRefreshToken, hasRefreshToken, refresh } =
-    useAuthStore();
+  const { resetAuthData, hasRefreshToken, refresh } = useAuthStore();
   const { hasUser } = useUserStore();
 
   if (hasRefreshToken() && !hasUser()) {
     try {
-      const tokenData = getRefreshToken();
-
-      await refresh(tokenData.token);
+      await refresh();
 
       return next();
     } catch (e) {
       resetAuthData();
-
-      debugger;
 
       return next({ name: 'public-signin' });
     }

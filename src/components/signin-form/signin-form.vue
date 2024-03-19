@@ -26,6 +26,7 @@
     </div>
     <div class="signin-form__item">
       <input
+        type="password"
         class="input"
         v-model="formData.password"
         placeholder="Password"
