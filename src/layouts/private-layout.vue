@@ -1,7 +1,10 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  import Header from '@/components/header/header.vue';
+</script>
 
 <template>
-  <div>
+  <Header />
+  <div class="container">
     <slot />
   </div>
 </template>
