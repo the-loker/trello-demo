@@ -4,6 +4,8 @@ import { defineStore } from 'pinia';
 import { useUserStore } from '@store/user';
 import api from '@services/api';
 
+import { HTTPError } from 'ky';
+
 export interface ITokenPayload {
   token_type: string;
   exp: number;
@@ -124,11 +126,32 @@ export const useAuthStore = defineStore('authStore', () => {
     password: string;
   }): Promise<void> {
     try {
-      const { access, refresh } = await api
-        .post('/users/token/', {
-          json: { username, password },
-        })
-        .json<{ access: string; refresh: string }>();
+      let access, refresh;
+
+      try {
+        const res = await api
+          .post('users/token/', {
+            json: { username, password },
+          })
+          .json<{ access: string; refresh: string }>();
+
+        access = res.access;
+        refresh = res.refresh;
+      } catch (e: unknown) {
+        if (e instanceof HTTPError) {
+          if (e.response.status === 400) {
+            throw new Error('Incorrect username or password');
+          }
+
+          const error = await e.response.json();
+
+          if (error.detail) {
+            throw new Error(error.detail);
+          }
+        }
+
+        throw e;
+      }
 
       const accessPayload = getTokenPayload(access);
       const refreshPayload = getTokenPayload(refresh);
@@ -136,7 +159,11 @@ export const useAuthStore = defineStore('authStore', () => {
       setAccess(access, accessPayload.exp);
       setRefresh(refresh, refreshPayload.exp);
       setUser(accessPayload.user_id);
-    } catch (e) {
+    } catch (e: unknown) {
+      if (!(e instanceof Error)) {
+        throw new Error('Oops, something went wrong');
+      }
+
       throw e;
     }
   }
@@ -151,32 +178,76 @@ export const useAuthStore = defineStore('authStore', () => {
     password: string;
   }): Promise<{ success: boolean; message: string }> {
     try {
-      await api.post('/users/create/', {
-        json: { username, email, password },
-      });
+      try {
+        await api.post('users/create/', {
+          json: { username, email, password },
+        });
+      } catch (e: unknown) {
+        if (e instanceof HTTPError) {
+          if (e.response.status === 400) {
+            throw new Error('Incorrect username or password');
+          }
+
+          const error = await e.response.json();
+
+          if (error.detail) {
+            throw new Error(error.detail);
+          }
+        }
+
+        throw e;
+      }
 
       return {
         success: true,
         message: 'Sign up is successfully',
       };
     } catch (e) {
+      if (!(e instanceof Error)) {
+        console.warn(e);
+
+        throw new Error('Oops, something went wrong');
+      }
+
       throw e;
     }
   }
 
   async function refresh(refreshToken: string) {
     try {
-      const { access } = await api
-        .post('/users/token/refresh/', {
-          json: { refresh: refreshToken },
-        })
-        .json<{ access: string }>();
+      let access;
+
+      try {
+        const res = await api
+          .post('/users/token/refresh/', {
+            json: { refresh: refreshToken },
+          })
+          .json<{ access: string }>();
+
+        access = res.access;
+      } catch (e) {
+        if (e instanceof HTTPError) {
+          const error = await e.response.json();
+
+          if (error.detail) {
+            throw new Error(error.detail);
+          }
+        }
+
+        throw e;
+      }
 
       const accessPayload = getTokenPayload(access);
 
       setAccess(access, accessPayload.exp);
       setUser(accessPayload.user_id);
     } catch (e) {
+      if (!(e instanceof Error)) {
+        console.warn(e);
+
+        throw new Error('Oops, something went wrong');
+      }
+
       throw e;
     }
   }
