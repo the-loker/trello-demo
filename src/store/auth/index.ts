@@ -54,6 +54,10 @@ export const useAuthStore = defineStore('authStore', () => {
     expireIn: 0, // Время жизни токена (ms)
   });
 
+  function getBearer() {
+    return `JWT ${auth.token}`;
+  }
+
   const isAuth = computed<boolean>(() => {
     return auth.token !== '' && !isTokenExpired(auth.expireIn);
   });
@@ -129,7 +133,7 @@ export const useAuthStore = defineStore('authStore', () => {
       let access, refresh;
 
       try {
-        const res = await api
+        const res = await api()
           .post('users/token/', {
             json: { username, password },
           })
@@ -179,7 +183,7 @@ export const useAuthStore = defineStore('authStore', () => {
   }): Promise<{ success: boolean; message: string }> {
     try {
       try {
-        await api.post('users/create/', {
+        await api().post('users/create/', {
           json: { username, email, password },
         });
       } catch (e: unknown) {
@@ -220,7 +224,7 @@ export const useAuthStore = defineStore('authStore', () => {
       const tokenData = getRefreshToken();
 
       try {
-        const res = await api
+        const res = await api()
           .post('users/token/refresh/', {
             json: { refresh: tokenData.token },
           })
@@ -259,6 +263,7 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   return {
+    getBearer,
     isAuth,
     resetAuthData,
     getRefreshToken,
