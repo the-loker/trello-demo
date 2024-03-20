@@ -9,8 +9,8 @@
 </script>
 
 <template>
-  <div v-if="hasErrors" class="auth-errors">
-    <div v-for="(error, idx) in errors" :key="idx" class="auth-errors__message">
+  <div v-if="hasErrors" class="errors">
+    <div v-for="(error, idx) in errors" :key="idx" class="errors__message">
       <span>{{ error }}</span>
     </div>
   </div>

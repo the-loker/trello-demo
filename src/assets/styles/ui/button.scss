@@ -28,4 +28,28 @@
       background-color: #3b81ba;
     }
   }
+
+  &--danger {
+    background-color: #ff5132;
+
+    &:hover {
+      background-color: #ff694e;
+    }
+  }
+
+  &--icon {
+    padding: 0;
+
+    background: none;
+
+    &:hover {
+      background-color: transparent;
+    }
+
+    &:disabled,
+    &:hover:disabled {
+      color: #8e8e8e;
+      background-color: transparent;
+    }
+  }
 }

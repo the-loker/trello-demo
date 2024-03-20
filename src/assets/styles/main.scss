@@ -1,6 +1,7 @@
 html,
 body {
   box-sizing: border-box;
+  min-width: $layot-min-width;
   margin: 0;
 
   background-color: $background-default;
@@ -25,4 +26,14 @@ h1.page-title {
   text-align: center;
 
   color: #ffffff;
+}
+
+.errors {
+  margin-bottom: 15px;
+
+  &__message {
+    color: #ff5e5e;
+
+    font-size: 0.9em;
+  }
 }
