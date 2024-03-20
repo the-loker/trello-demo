@@ -29,8 +29,6 @@
   function onCloseForm() {
     isOpenForm.value = false;
   }
-
-  console.log(stage.value);
 </script>
 
 <template>

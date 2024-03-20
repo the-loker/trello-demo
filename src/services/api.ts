@@ -3,7 +3,7 @@ import router from '@routes/index';
 import { useAuthStore } from '@store/auth';
 
 export default function (needAuth: boolean = false) {
-  const { getBearer, isAuth, hasRefreshToken, resetAuthData, refresh } =
+  const { getBearer, isAccessTokenExpired, resetAuthData, refresh } =
     useAuthStore();
 
   const api = ky.create({
@@ -14,7 +14,7 @@ export default function (needAuth: boolean = false) {
             async (req) => {
               req.headers.set('Authorization', getBearer());
 
-              if (!isAuth && hasRefreshToken()) {
+              if (isAccessTokenExpired()) {
                 try {
                   await refresh();
 

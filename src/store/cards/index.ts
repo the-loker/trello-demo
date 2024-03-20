@@ -100,7 +100,7 @@ export const useCardsStore = defineStore('cardsStore', () => {
       cards[cardId].row = row;
 
       const card = await api(true)
-        .patch(`cards/${cardId}`, { json: { row, seq_num, text } })
+        .patch(`cards/${cardId}/`, { json: { row, seq_num, text } })
         .json<ICard>();
 
       cards[card.id] = card;

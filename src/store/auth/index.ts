@@ -62,6 +62,10 @@ export const useAuthStore = defineStore('authStore', () => {
     return auth.token !== '' && !isTokenExpired(auth.expireIn);
   });
 
+  function isAccessTokenExpired() {
+    return isTokenExpired(auth.expireIn);
+  }
+
   function resetAuthData() {
     auth.token = '';
     auth.expireIn = 0;
@@ -108,9 +112,9 @@ export const useAuthStore = defineStore('authStore', () => {
         throw new Error('Incorrect refresh token data');
       }
 
-      if (isTokenExpired(tokenData.expireIn)) {
-        throw new Error('Refresh Token is expired');
-      }
+      // if (isTokenExpired(tokenData.expireIn)) {
+      //   throw new Error('Refresh Token is expired');
+      // }
 
       return tokenData;
     } catch (e) {
@@ -265,6 +269,7 @@ export const useAuthStore = defineStore('authStore', () => {
   return {
     getBearer,
     isAuth,
+    isAccessTokenExpired,
     resetAuthData,
     getRefreshToken,
     hasRefreshToken,
