@@ -3,6 +3,10 @@ import type { PropType, ExtractPropTypes } from 'vue';
 export interface IStage {
   id: string;
   title: string;
+  colors: {
+    text_color: string;
+    bg_color: string;
+  };
 }
 
 export const stageProps = {

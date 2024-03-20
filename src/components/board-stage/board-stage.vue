@@ -29,6 +29,8 @@
   function onCloseForm() {
     isOpenForm.value = false;
   }
+
+  console.log(stage.value);
 </script>
 
 <template>
@@ -38,7 +40,13 @@
     @dragenter.revent
     class="board-stage"
   >
-    <div class="board-stage__header">
+    <div
+      class="board-stage__header"
+      :style="{
+        color: stage.colors.text_color,
+        'background-color': stage.colors.bg_color,
+      }"
+    >
       <span class="board-stage__title">
         {{ stage.title }} ({{ countStageCards }})
       </span>
