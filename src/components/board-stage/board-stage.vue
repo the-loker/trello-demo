@@ -1,17 +1,26 @@
 <script lang="ts" setup>
-  import { ref, toRefs, defineProps } from 'vue';
+  import { ref, toRefs, defineProps, onBeforeMount } from 'vue';
 
   import { stageProps } from './board-stage';
   import { useStage } from './use-board-stage';
 
+  import BoardCard from '../board-card/board-card.vue';
   import BoardCardForm from '../board-card-form/board-card-form.vue';
 
   const props = defineProps(stageProps);
 
-  useStage(props);
+  const { stageCards, countStageCards, getCards } = useStage(props);
 
   const { stage } = toRefs(props);
   const isOpenForm = ref(false);
+
+  onBeforeMount(async () => {
+    try {
+      await getCards({ row: props.stage.id });
+    } catch (e) {
+      throw e;
+    }
+  });
 
   function onOpenForm() {
     isOpenForm.value = true;
@@ -25,9 +34,13 @@
 <template>
   <div class="board-stage">
     <div class="board-stage__header">
-      <span class="board-stage__title">{{ stage.title }}</span>
+      <span class="board-stage__title">
+        {{ stage.title }} ({{ countStageCards }})
+      </span>
     </div>
-    <div class="board-stage__cards"></div>
+    <div class="board-stage__cards">
+      <BoardCard v-for="card in stageCards" :key="card.id" :card="card" />
+    </div>
     <div class="board-stage__form">
       <template v-if="isOpenForm">
         <BoardCardForm
@@ -37,7 +50,11 @@
         />
       </template>
 
-      <template v-else><button @click="onOpenForm">add</button></template>
+      <template v-else>
+        <button @click="onOpenForm" class="button button--primary">
+          Добавить карточку
+        </button>
+      </template>
     </div>
   </div>
 </template>
@@ -45,6 +62,7 @@
 <style lang="scss">
   .board-stage {
     &__header {
+      padding: 10px;
     }
 
     &__title {
@@ -52,10 +70,21 @@
     }
 
     &__cards {
-      background-color: #292b31;
+      display: flex;
+      flex-direction: column;
+
+      gap: 10px;
     }
 
     &__form {
+      padding-top: 10px;
+    }
+
+    &__cards,
+    &__form {
+      padding: 10px;
+
+      background-color: #292b31;
     }
   }
 

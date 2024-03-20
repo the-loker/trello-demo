@@ -5,7 +5,7 @@
 
   const props = defineProps(cardProps);
 
-  useCard(props);
+  const { isLoading, onRemove } = useCard(props);
 
   const { card } = toRefs(props);
 </script>
@@ -13,7 +13,17 @@
 <template>
   <div class="board-card">
     <div class="board-card__header">
-      <span>id {{ card.id }}</span>
+      <div class="board-card__header-title">
+        <span class="board-card__id">id:</span>
+        <span>{{ card.id }}</span>
+      </div>
+      <button
+        @click="onRemove"
+        :disabled="isLoading"
+        class="button button--icon"
+      >
+        &#x2715;
+      </button>
     </div>
     <div class="board-card__content">
       {{ card.text }}
@@ -23,6 +33,30 @@
 
 <style lang="scss">
   .board-card {
+    padding: 10px;
+
+    color: #b3b3b9;
+    background-color: #202325;
+
+    &__header {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: space-between;
+
+      margin-bottom: 10px;
+
+      &-title {
+        display: flex;
+        flex-direction: row;
+
+        gap: 5px;
+      }
+    }
+
+    &__id {
+      color: #ffffff;
+    }
   }
+
 </style>
-./board-card ./use-board-card
