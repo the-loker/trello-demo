@@ -5,13 +5,18 @@
 
   const props = defineProps(cardProps);
 
-  const { isLoading, onRemove } = useCard(props);
+  const { isLoading, onRemove, onDragStart, onDragStop } = useCard(props);
 
   const { card } = toRefs(props);
 </script>
 
 <template>
-  <div class="board-card">
+  <div
+    @dragstart="onDragStart($event, card)"
+    @dragend="onDragStop($event)"
+    class="board-card"
+    draggable="true"
+  >
     <div class="board-card__header">
       <div class="board-card__header-title">
         <span class="board-card__id">id:</span>
@@ -34,6 +39,8 @@
 <style lang="scss">
   .board-card {
     padding: 10px;
+
+    cursor: move;
 
     color: #b3b3b9;
     background-color: #202325;

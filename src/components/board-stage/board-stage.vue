@@ -9,7 +9,7 @@
 
   const props = defineProps(stageProps);
 
-  const { stageCards, countStageCards, getCards } = useStage(props);
+  const { stageCards, countStageCards, getCards, onDrop } = useStage(props);
 
   const { stage } = toRefs(props);
   const isOpenForm = ref(false);
@@ -32,7 +32,12 @@
 </script>
 
 <template>
-  <div class="board-stage">
+  <div
+    @drop="onDrop($event, stage.id)"
+    @dragover.prevent
+    @dragenter.revent
+    class="board-stage"
+  >
     <div class="board-stage__header">
       <span class="board-stage__title">
         {{ stage.title }} ({{ countStageCards }})
