@@ -1,0 +1,1 @@
+import{o as r,c as s}from"./index-DhxZ2PwS.js";const _=(c,e)=>{const t=c.__vccOpts||c;for(const[o,n]of e)t[o]=n;return t},a={};function l(c,e){return r(),s("h1",null,"Public")}const u=_(a,[["render",l]]);export{u as default};
